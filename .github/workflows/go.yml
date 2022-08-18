@@ -1,6 +1,17 @@
 name: contiuous-integration
 on: push
 jobs:
+  validate-backend-dockerfile:
+    name: "Validate Backend Dockerfile"
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+    - name: lint
+      uses: luke142367/Docker-Lint-Action@v1.0.0
+      with:
+        target: backend/Dockerfile
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   build-backend:
     runs-on: ubuntu-latest
     steps:
