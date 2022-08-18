@@ -22,7 +22,7 @@ jobs:
         run: cd backend && go get github.com/gomodule/redigo/redis
       - name: Build backend
         run: cd backend && go build
-  push-frontend-to-docker-hub:
+  push-backend-to-docker-hub:
     name: "Push backend to Docker Hub"
     runs-on: ubuntu-latest
     needs: ['build-backend', 'validate-backend-dockerfile']
