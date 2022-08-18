@@ -6,7 +6,7 @@ on:
 jobs:
   deployment:
     name: "Deploy to Kubernetes"
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted]
     steps:
       - name: Deploy to kubernetes
         run: /home/ubuntu/simple-fortune-cookie/setup.sh
