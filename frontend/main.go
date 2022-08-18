@@ -20,6 +20,9 @@ type fortune struct {
 	Message string `json:"message" redis:"message"`
 }
 
+
+
+
 type newFortune struct {
     Message string `json:"message"`
 }
