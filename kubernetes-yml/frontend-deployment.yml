@@ -20,5 +20,7 @@ spec:
         env:
         - name: BACKEND_DNS
           value: backend
+        - name: BACKEND_PORT
+          value: "9000"  
     #    ports:
     #    - containerPort: 8080
