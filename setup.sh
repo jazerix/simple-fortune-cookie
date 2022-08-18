@@ -1,3 +1,3 @@
 #!/bin/bash
-kubectl create -f pvc-redis.yaml
-kubectl apply -f kubernetes-yml
+kubectl create -f /home/ubuntu/simple-fortune-cookie/pvc-redis.yaml
+kubectl apply -f /home/ubuntu/simple-fortune-cookie/kubernetes-yml
