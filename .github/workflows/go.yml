@@ -103,3 +103,11 @@ jobs:
           push: true
           tags: nicolaj2903/devops-cookie-nsn-frontend:latest
           context: frontend 
+  notify-on-discord:
+    name: "Send Discord notification"
+    needs: ['push-frontend-to-docker-hub', 'push-backend-to-docker-hub']
+    env:
+      DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+    uses: Ilshidur/action-discord@master
+    with:
+      args: 'The project {{ EVENT_PAYLOAD.repository.full_name }} has been pushed to docker hub.'
