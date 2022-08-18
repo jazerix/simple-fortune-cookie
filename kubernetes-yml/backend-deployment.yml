@@ -16,6 +16,4 @@ spec:
     spec:
       containers:
       - name: backend
-        image: DockerImageGoesHere
-        ports:
-        - containerPort: FillMeOut
+        image: devops-cookie-nsn-backend
