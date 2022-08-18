@@ -7,6 +7,10 @@ jobs:
       - name: Clone-down
         uses: actions/checkout@v2
       - name: Install dependencies
+<<<<<<< HEAD
         run: cd backend && go get github.com/gomodule/redigo/redis
+=======
+        run: go get github.com/gomodule/redigo/redis
+>>>>>>> d0e41f1 (Backend action fixes #20)
       - name: Build backend
         run: cd backend && go build
