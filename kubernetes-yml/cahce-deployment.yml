@@ -21,6 +21,7 @@ spec:
       containers:
       - name: redis
         image: redis:7.0
+        command: ["redis-server", "--appendonly", "yes"]
         ports:
         - containerPort: 6379
         volumeMounts:
