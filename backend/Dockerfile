@@ -1,11 +1,11 @@
 # Include AS build? 
 FROM golang:1.16-alpine
 
-WORKDIR /simple-fortune-cookie/backend
+WORKDIR /backend
 
-COPY *.go ./
+COPY ./ ./
 RUN go get github.com/gomodule/redigo/redis
 
-ENTRYPOINT ["go", "build"] 
+RUN go build
 
 CMD ["go", "run", "backend"]
