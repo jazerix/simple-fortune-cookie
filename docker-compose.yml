@@ -3,6 +3,10 @@ version: '3.7'
 services:
   redis:
     image: redis:7.0
+    command: ["redis-server", "--appendonly", "yes"]
     ports:
       - 6379:6379
+    volumes:
+      - ../data/redis:/data
+    restart: always
     
