@@ -65,8 +65,9 @@ jobs:
           name: coverage-report
           path: frontend/coverage.html
   push-frontend-to-docker-hub:
+    name: "Push frontend to Docker Hub"
     runs-on: ubuntu-latest
-    needs: ['frontend-tests']
+    needs: ['frontend-tests', 'validate-frontend-dockerfile']
     steps:
       - name: Clone-down
         uses: actions/checkout@v3
