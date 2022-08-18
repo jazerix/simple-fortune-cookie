@@ -10,7 +10,7 @@ spec:
     matchLabels:        # labels the replica selector should match
       app: frontend
   strategy:
-    rollingupdate:
+    rollingUpdate:
       maxSurge: 25%
       maxUnavailable: 25%
     type: RollingUpdate
