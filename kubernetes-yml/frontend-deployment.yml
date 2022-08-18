@@ -16,6 +16,9 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: DockerImageGoesHere
-        ports:
-        - containerPort: 8080
+        image: nicolaj2903/devops-cookie-nsn-frontend
+        env:
+        - name: BACKEND_DNS
+          value: backend
+    #    ports:
+    #    - containerPort: 8080
