@@ -2,6 +2,7 @@ name: contiuous-integration
 on: 
   push:
     branches:
+      - '**'
       - '!main'
 jobs:
   validate-backend-dockerfile:
