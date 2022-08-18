@@ -34,10 +34,10 @@ jobs:
       - name: Test frontend
         run: cd frontend && go test --cover -coverprofile cover.out
       - name: Create coverage report
-        run: go tool cover -html cover.out -o coverage.html
+        run: cd frontend && go tool cover -html cover.out -o coverage.html
       - name: Upload coverage report
         uses: actions/upload-artifact@v2
         with:
           name: coverage-report
-          path: coverage.html
+          path: frontend/coverage.html
       
