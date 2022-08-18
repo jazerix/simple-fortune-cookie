@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: nicolaj2903/devops-cookie-nsn-frontend
+        image: nicolaj2903/devops-cookie-nsn-frontend:latest
         env:
         - name: BACKEND_DNS
           value: backend
