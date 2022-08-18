@@ -106,8 +106,10 @@ jobs:
   notify-on-discord:
     name: "Send Discord notification"
     needs: ['push-frontend-to-docker-hub', 'push-backend-to-docker-hub']
+    runs-on: ubuntu-latest
     steps:    
-    - env:
+    - name: "Use webhook"
+      env:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
       uses: Ilshidur/action-discord@master
       with:
