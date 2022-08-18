@@ -1,5 +1,8 @@
 name: contiuous-integration
-on: push
+on: 
+  push:
+    branches:
+      - '!main'
 jobs:
   validate-backend-dockerfile:
     runs-on: ubuntu-latest

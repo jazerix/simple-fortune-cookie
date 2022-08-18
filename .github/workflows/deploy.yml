@@ -1,0 +1,12 @@
+name: deploy
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deployment:
+    name: "Deploy to Kubernetes"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to kubernetes
+        run: /home/ubuntu/simple-fortune-cookie/setup.sh
