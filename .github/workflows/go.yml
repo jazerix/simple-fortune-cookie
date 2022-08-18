@@ -1,16 +1,42 @@
 name: contiuous-integration
 on: push
 jobs:
-  build:
+  build-backend:
     runs-on: ubuntu-latest
     steps:
       - name: Clone-down
         uses: actions/checkout@v2
       - name: Install dependencies
-<<<<<<< HEAD
         run: cd backend && go get github.com/gomodule/redigo/redis
-=======
-        run: go get github.com/gomodule/redigo/redis
->>>>>>> d0e41f1 (Backend action fixes #20)
       - name: Build backend
         run: cd backend && go build
+  build-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone-down
+        uses: actions/checkout@v2
+      - name: Build frontend
+        run: cd frontend && go build
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: frontend
+          path: frontend
+  frontend-tests:
+    runs-on: ubuntu-latest
+    needs: ['build-frontend']   
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v2
+        with:
+            name: frontend
+            path: frontend
+      - name: Test frontend
+        run: cd frontend && go test --cover -coverprofile cover.out
+      - name: Create coverage report
+        run: cd frontend && go tool cover -html cover.out -o coverage.html
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage-report
+          path: frontend/coverage.html
