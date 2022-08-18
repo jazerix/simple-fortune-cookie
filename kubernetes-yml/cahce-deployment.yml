@@ -19,11 +19,12 @@ spec:
         persistentVolumeClaim:
           claimName: pvc-redis
       containers:
-      - name: redis
-        image: redis:7.0
-        command: ["redis-server", "--appendonly", "yes"]
-        ports:
-        - containerPort: 6379
+      - image: redis:7.0
+        name: redis
+        
+ #       command: ["redis-server", "--appendonly", "yes"]
+   #     ports:
+  #      - containerPort: 6379
         volumeMounts:
-        - mountPath: ../data/redis:/data
+        - mountPath: /data
           name: redis-volume

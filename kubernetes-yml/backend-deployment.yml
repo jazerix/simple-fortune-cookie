@@ -17,5 +17,8 @@ spec:
       containers:
       - name: backend
         image: nicolaj2903/devops-cookie-nsn-backend
-        environment:
-          REDIS_DNS: redis
+        env:
+          - name: REDIS_DNS
+            value: redis
+      #  ports:
+       # - containerPort: 9000
