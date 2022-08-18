@@ -22,6 +22,18 @@ jobs:
         run: cd backend && go get github.com/gomodule/redigo/redis
       - name: Build backend
         run: cd backend && go build
+  validate-frontend-dockerfile:
+    runs-on: ubuntu-latest
+    name: "Validate Frontend Dockerfile"
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+    - name: lint
+      uses: luke142367/Docker-Lint-Action@v1.0.0
+      with:
+        target: frontend/Dockerfile
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   build-frontend:
     runs-on: ubuntu-latest
     steps:
