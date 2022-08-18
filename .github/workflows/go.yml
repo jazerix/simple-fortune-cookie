@@ -56,4 +56,4 @@ jobs:
         with:
           push: true
           tags: nicolaj2903/devops-cookie-nsn-frontend:latest
-          file: frontend/Dockerfile 
+          context: frontend 
