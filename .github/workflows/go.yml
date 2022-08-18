@@ -1,7 +1,20 @@
 name: contiuous-integration
 on: push
 jobs:
+  validate-backend-dockerfile:
+    runs-on: ubuntu-latest
+    name: "Validate backend Dockerfile"
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+    - name: lint
+      uses: luke142367/Docker-Lint-Action@v1.0.0
+      with:
+        target: backend/Dockerfile
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   build-backend:
+    name: "Build backend"
     runs-on: ubuntu-latest
     steps:
       - name: Clone-down
@@ -10,7 +23,38 @@ jobs:
         run: cd backend && go get github.com/gomodule/redigo/redis
       - name: Build backend
         run: cd backend && go build
+  push-backend-to-docker-hub:
+    name: "Push backend to Docker Hub"
+    runs-on: ubuntu-latest
+    needs: ['build-backend', 'validate-backend-dockerfile']
+    steps:
+      - name: Clone-down
+        uses: actions/checkout@v3
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+            username: ${{ secrets.DOCKER_HUB_USERNAME }}
+            password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: Build and Push
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          tags: nicolaj2903/devops-cookie-nsn-backend:latest
+          context: backend
+  validate-frontend-dockerfile:
+    runs-on: ubuntu-latest
+    name: "Validate frontend Dockerfile"
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+    - name: lint
+      uses: luke142367/Docker-Lint-Action@v1.0.0
+      with:
+        target: frontend/Dockerfile
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   build-frontend:
+    name: "Build frontend"
     runs-on: ubuntu-latest
     steps:
       - name: Clone-down
@@ -23,6 +67,7 @@ jobs:
           name: frontend
           path: frontend
   frontend-tests:
+    name: "Test frontend"
     runs-on: ubuntu-latest
     needs: ['build-frontend']   
     steps:
@@ -40,3 +85,32 @@ jobs:
         with:
           name: coverage-report
           path: frontend/coverage.html
+  push-frontend-to-docker-hub:
+    name: "Push frontend to Docker Hub"
+    runs-on: ubuntu-latest
+    needs: ['frontend-tests', 'validate-frontend-dockerfile']
+    steps:
+      - name: Clone-down
+        uses: actions/checkout@v3
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+            username: ${{ secrets.DOCKER_HUB_USERNAME }}
+            password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: Build and Push
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          tags: nicolaj2903/devops-cookie-nsn-frontend:latest
+          context: frontend 
+  notify-on-discord:
+    name: "Send Discord notification"
+    needs: ['push-frontend-to-docker-hub', 'push-backend-to-docker-hub']
+    runs-on: ubuntu-latest
+    steps:    
+    - name: "Use webhook"
+      env:
+        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      uses: Ilshidur/action-discord@master
+      with:
+        args: 'The project {{ EVENT_PAYLOAD.repository.full_name }} has been pushed to docker hub.'
