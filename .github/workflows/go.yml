@@ -55,4 +55,5 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: nicolaj2903/devops-cookie-nsn-frontend:latest 
+          tags: nicolaj2903/devops-cookie-nsn-frontend:latest
+          file: frontend/Dockerfile 
