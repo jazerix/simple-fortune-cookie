@@ -5,7 +5,7 @@ metadata:
   labels:
     app: redis          # arbitrary label on deployment
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:        # labels the replica selector should match
       app: redis
