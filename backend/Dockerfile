@@ -5,4 +5,4 @@ COPY *.go ./
 RUN go get github.com/gomodule/redigo/redis
 RUN go build
 
-ENTRYPOINT ["go", "run"]
+ENTRYPOINT ["go", "run", "backend"] 
